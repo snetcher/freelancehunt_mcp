@@ -48,6 +48,74 @@ npm run build
 npm start
 ```
 
+## Using the API
+
+After starting the server, it will be available at `http://localhost:3000` (or your configured PORT).
+
+You can test the API using various tools:
+
+### cURL
+```bash
+# Test health check endpoint
+curl http://localhost:3000/health
+
+# Expected response:
+# {"status":"ok","timestamp":"2024-01-20T12:34:56.789Z"}
+```
+
+### HTTPie
+```bash
+# Test health check endpoint
+http GET http://localhost:3000/health
+
+# Expected response:
+# {"status":"ok","timestamp":"2024-01-20T12:34:56.789Z"}
+```
+
+### Fetch (JavaScript)
+```javascript
+// Test health check endpoint
+fetch('http://localhost:3000/health')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
+// Expected response:
+// {
+//   "status": "ok",
+//   "timestamp": "2024-01-20T12:34:56.789Z"
+// }
+```
+
+### Axios (JavaScript/TypeScript)
+```typescript
+// Test health check endpoint
+import axios from 'axios';
+
+axios.get('http://localhost:3000/health')
+  .then(response => console.log(response.data));
+
+// Expected response:
+// {
+//   "status": "ok",
+//   "timestamp": "2024-01-20T12:34:56.789Z"
+// }
+```
+
+### Python (requests)
+```python
+# Test health check endpoint
+import requests
+
+response = requests.get('http://localhost:3000/health')
+print(response.json())
+
+# Expected response:
+# {
+#   "status": "ok",
+#   "timestamp": "2024-01-20T12:34:56.789Z"
+# }
+```
+
 ## API Endpoints
 
 ### Health Check
