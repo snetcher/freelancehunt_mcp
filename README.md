@@ -53,81 +53,148 @@ npm start
 ### Health Check
 ```
 GET /health
+Response: { status: 'ok', timestamp: string }
 ```
 
 ### Profile
 ```
+# Get current user profile
 GET /api/profile
+Response: Profile object with user details
 ```
 
 ### Projects
 ```
-# List projects
+# List all projects
 GET /api/projects
 Query parameters:
-- page: page number
-- status: project status
+- page: page number (default: 1)
+- status: project status (open, closed, etc.)
 - skills: comma-separated skill IDs
-- employer_id: employer ID
-- only_for_plus: true/false
-- budget_amount: budget amount
-- budget_currency: budget currency
+- employer_id: filter by employer ID
+- only_for_plus: true/false - filter Plus projects
+- budget_amount: filter by budget amount
+- budget_currency: filter by budget currency (UAH, USD, EUR, etc.)
+Response: Paginated list of projects
 
 # Get specific project
 GET /api/projects/:id
+Parameters:
+- id: project ID (number)
+Response: Project details
 ```
 
 ### Contests
 ```
-# List contests
+# List all contests
 GET /api/contests
 Query parameters:
-- page: page number
-- status: contest status
+- page: page number (default: 1)
+- status: contest status (active, complete, etc.)
+Response: Paginated list of contests
 
 # Get specific contest
 GET /api/contests/:id
+Parameters:
+- id: contest ID (number)
+Response: Contest details
 ```
 
 ### Freelancers
 ```
-# List freelancers
+# List all freelancers
 GET /api/freelancers
 Query parameters:
-- page: page number
+- page: page number (default: 1)
 - skills: comma-separated skill IDs
-- verification_status: verification status
-- is_plus_active: true/false
-- rating_from: minimum rating
+- verification_status: filter by verification status
+- is_plus_active: true/false - filter Plus members
+- rating_from: minimum rating threshold
+Response: Paginated list of freelancers
 
 # Get specific freelancer
 GET /api/freelancers/:id
+Parameters:
+- id: freelancer ID (number)
+Response: Freelancer details
 ```
 
 ### Employers
 ```
-# List employers
+# List all employers
 GET /api/employers
+Query parameters:
+- page: page number (default: 1)
+Response: Paginated list of employers
 
 # Get specific employer
 GET /api/employers/:id
+Parameters:
+- id: employer ID (number)
+Response: Employer details
 ```
 
 ### Reviews
 ```
+# Get user reviews
 GET /api/users/:id/reviews
+Parameters:
+- id: user ID (number)
 Query parameters:
-- page: page number
+- page: page number (default: 1)
 - type: review type (from/to)
+Response: Paginated list of reviews
 ```
 
 ### Reference Data
 ```
-# List skills
+# List all available skills
 GET /api/skills
+Response: Array of skill objects
+{
+  id: number,
+  name: string
+}
 
-# List countries
+# List all available countries
 GET /api/countries
+Response: Array of country objects
+{
+  id: number,
+  name: string
+}
+```
+
+### Response Formats
+
+#### Paginated Response
+```typescript
+{
+  data: T[];
+  links: {
+    first: string;
+    last: string;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    current_page: number;
+    from: number;
+    last_page: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+  };
+}
+```
+
+#### Error Response
+```typescript
+{
+  error: string;
+  status?: number;
+}
 ```
 
 ## Development
